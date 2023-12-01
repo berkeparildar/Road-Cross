@@ -11,8 +11,8 @@ public class CarSpawner : MonoBehaviour
     [SerializeField] private int spawnCount;
     private void Start()
     {
-        spawnCount = Random.Range(1, 6);
-        carSpeed = Random.Range(4, 7);
+        spawnCount = Random.Range(1, 4);
+        carSpeed = Random.Range(5, 7);
         spawnCooldown = 5;
         var halfChance = Random.Range(0, 2);
         if (halfChance == 0)
@@ -34,7 +34,7 @@ public class CarSpawner : MonoBehaviour
         while (true)
         {
             yield return StartCoroutine(SpawnCar());
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(spawnCount);
         }
     }
 
