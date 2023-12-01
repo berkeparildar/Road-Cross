@@ -4,6 +4,7 @@ using UnityEngine.Serialization;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
+    [SerializeField] private int step;
     [SerializeField] private bool isMoving;
     [SerializeField] private Vector3 targetPosition;
     // Start is called before the first frame update
@@ -26,22 +27,22 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
-                targetPosition = new Vector3(currentPosition.x - 5, currentPosition.y, currentPosition.z);
+                targetPosition = new Vector3(currentPosition.x - step, currentPosition.y, currentPosition.z);
                 isMoving = true;
             }
             else if (Input.GetKeyDown(KeyCode.D))
             {
-                targetPosition = new Vector3(currentPosition.x + 5, currentPosition.y, currentPosition.z);
+                targetPosition = new Vector3(currentPosition.x + step, currentPosition.y, currentPosition.z);
                 isMoving = true;
             }
             else if (Input.GetKeyDown(KeyCode.W))
             {
-                targetPosition = new Vector3(currentPosition.x, currentPosition.y, currentPosition.z + 5);
+                targetPosition = new Vector3(currentPosition.x, currentPosition.y, currentPosition.z + step);
                 isMoving = true;
             }
             else if (Input.GetKeyDown(KeyCode.S))
             {
-                targetPosition = new Vector3(currentPosition.x, currentPosition.y, currentPosition.z - 5);
+                targetPosition = new Vector3(currentPosition.x, currentPosition.y, currentPosition.z - step);
                 isMoving = true;
             }
         }

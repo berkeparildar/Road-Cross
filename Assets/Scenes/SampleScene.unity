@@ -309,6 +309,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1429756130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1429756132}
+  - component: {fileID: 1429756131}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1429756131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429756130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bdb5d3fb9e9c4e57ba3823792299015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  riverPrefab: {fileID: 4103379110360544086, guid: a5bbe45e6d9734e7599db7523155737b, type: 3}
+  roadStartPrefab: {fileID: 8064891308269529718, guid: 266276441e2284f2ca54aed0abf6a67c, type: 3}
+  roadMiddlePrefab: {fileID: 9161722516897769388, guid: 2a470788686b24e4f9ffdaa20a77fa56, type: 3}
+  roadEndPrefab: {fileID: 7817409961281964429, guid: 8c47bc74365684598817bfbc88674a08, type: 3}
+  grassPrefab: {fileID: 8623267177306350461, guid: a97d91e4a218348d69616f10a39419be, type: 3}
+  currentPosition: 0
+  levelSelector: 0
+  currentlyBeingGenerated: 0
+  defaultGrassPosition: {x: 0, y: -0.5, z: 0}
+  defaultRiverPosition: {x: 0, y: -0.8, z: 0}
+  defaultRoadPosition: {x: 0, y: 0, z: 0}
+  targetSpawnPosition: 0
+  player: {fileID: 1433873479}
+--- !u!4 &1429756132
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429756130}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1433873478
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,7 +380,7 @@ GameObject:
   - component: {fileID: 1433873481}
   - component: {fileID: 1433873479}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -342,6 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
+  step: 3
   isMoving: 0
   targetPosition: {x: 0, y: 0, z: 0}
 --- !u!65 &1433873481
@@ -424,7 +482,7 @@ Transform:
   m_GameObject: {fileID: 1433873478}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 5}
+  m_LocalPosition: {x: 0, y: 0.5, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -575,3 +633,4 @@ SceneRoots:
   - {fileID: 1433873484}
   - {fileID: 1557873264}
   - {fileID: 2049756325}
+  - {fileID: 1429756132}
