@@ -12,7 +12,7 @@ public class CarSpawner : MonoBehaviour
     private void Start()
     {
         spawnCount = Random.Range(1, 6);
-        carSpeed = Random.Range(5, 9);
+        carSpeed = Random.Range(4, 7);
         spawnCooldown = 5;
         var halfChance = Random.Range(0, 2);
         if (halfChance == 0)

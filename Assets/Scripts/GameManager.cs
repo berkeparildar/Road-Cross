@@ -53,6 +53,9 @@ public class GameManager : MonoBehaviour
                     GenerateRiver();
                     break;
                 case 3:
+                    GenerateGrass();
+                    break;
+                case 4:
                     GenerateRoad();
                     break;
             }

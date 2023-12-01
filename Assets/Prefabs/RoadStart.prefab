@@ -1867,6 +1867,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4612325417312565232}
   - component: {fileID: 6331667089707296628}
+  - component: {fileID: -7344604975607830251}
   m_Layer: 0
   m_Name: RoadStart
   m_TagString: Untagged
@@ -1921,6 +1922,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 55, y: 0.1, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-7344604975607830251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8064891308269529718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffca8fa99eeea46cb8b13c2a0467c1ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnDirection: 0
+  spawnPosition: {x: 0, y: 0, z: 0}
+  spawnCooldown: 0
+  carPrefab: {fileID: 7969141817325049335, guid: 2f889d17ebb3a4e7db2607e2ccb961cf, type: 3}
+  carSpeed: 0
+  spawnCount: 0
 --- !u!1 &8145925887374464344
 GameObject:
   m_ObjectHideFlags: 0
