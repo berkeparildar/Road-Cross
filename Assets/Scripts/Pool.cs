@@ -7,20 +7,25 @@ public class Pool : MonoBehaviour
     [SerializeField] private Car carPrefab;
     [SerializeField] private int carCount;
     [SerializeField] private GameObject carContainer;
+    [SerializeField] private Log logPrefab;
+    [SerializeField] private int logCount;
+    [SerializeField] private GameObject logContainer;
     [SerializeField] private Road roadStartPrefab;
-    [SerializeField] private Road roadMiddlePrefab;
-    [SerializeField] private Road roadEndPrefab;
     [SerializeField] private int roadStartCount;
+    [SerializeField] private Road roadMiddlePrefab;
     [SerializeField] private int roadMiddleCount;
+    [SerializeField] private Road roadEndPrefab;
     [SerializeField] private int roadEndCount;
+    [SerializeField] private GameObject roadContainer;
     [SerializeField] private River riverPrefab;
     [SerializeField] private int riverCount;
-    [SerializeField] private GameObject levelContainer;
-    public IObjectPool<Car> CarPool;
-    public IObjectPool<Road> RoadStartPool;
-    public IObjectPool<Road> RoadMiddlePool;
-    public IObjectPool<Road> RoadEndPool;
-    public IObjectPool<River> RiverPool;
+    [SerializeField] private GameObject riverContainer;
+    public IObjectPool<MovingObstacle> CarPool;
+    public IObjectPool<MovingObstacle> LogPool;
+    public IObjectPool<ObstacleSpawner> RoadStartPool;
+    public IObjectPool<ObstacleSpawner> RoadMiddlePool;
+    public IObjectPool<ObstacleSpawner> RoadEndPool;
+    public IObjectPool<ObstacleSpawner> RiverPool;
 
     private void Awake()
     {
@@ -29,15 +34,25 @@ public class Pool : MonoBehaviour
 
     private void Start()
     {
-        CarPool = new ObjectPool<Car>(CreateCar, ActivateCar, DeactivateCar, DestroyCar, true, carCount, carCount * 2);
-        RoadStartPool = new ObjectPool<Road>(CreateRoadStart, ActivateRoad, DeactivateRoad, DestroyRoad, true,
+        CarPool = new ObjectPool<MovingObstacle>(CreateCar, ActivateMovingObstacle, DeactivateMovingObstacle, DestroyMovingObstacle, true, carCount, carCount * 2);
+        LogPool = new ObjectPool<MovingObstacle>(CreateLog, ActivateMovingObstacle, DeactivateMovingObstacle,
+            DestroyMovingObstacle, true, logCount, logCount * 2);
+        RoadStartPool = new ObjectPool<ObstacleSpawner>(CreateRoadStart, ActivateObstacleSpawner, DeactivateObstacleSpawner, DestroyObstacleSpawner, true,
             roadStartCount, roadStartCount * 2);
-        RoadMiddlePool = new ObjectPool<Road>(CreateRoadMiddle, ActivateRoad, DeactivateRoad, DestroyRoad, true,
+        RoadMiddlePool = new ObjectPool<ObstacleSpawner>(CreateRoadMiddle, ActivateObstacleSpawner, DeactivateObstacleSpawner, DestroyObstacleSpawner, true,
             roadMiddleCount, roadMiddleCount * 2);
-        RoadEndPool = new ObjectPool<Road>(CreateRoadEnd, ActivateRoad, DeactivateRoad, DestroyRoad, true,
+        RoadEndPool = new ObjectPool<ObstacleSpawner>(CreateRoadEnd, ActivateObstacleSpawner, DeactivateObstacleSpawner, DestroyObstacleSpawner, true,
             roadEndCount, roadEndCount * 2);
-        RiverPool = new ObjectPool<River>(CreateRiver, ActivateRiver, DeactivateRiver, DestroyRiver, true,
+        RiverPool = new ObjectPool<ObstacleSpawner>(CreateRiver, ActivateObstacleSpawner, DeactivateObstacleSpawner, 
+            DestroyObstacleSpawner, true,
             riverCount, riverCount * 2);
+    }
+
+    private Log CreateLog()
+    {
+        Log logInstance = Instantiate(logPrefab, logContainer.transform);
+        logInstance.ObjectPool = LogPool;
+        return logInstance;
     }
 
     private Car CreateCar()
@@ -47,76 +62,66 @@ public class Pool : MonoBehaviour
         return carInstance;
     }
 
-    private void ActivateCar(Car car)
+    private void ActivateMovingObstacle(MovingObstacle movingObstacle)
     {
-        car.gameObject.SetActive(true);
+        movingObstacle.gameObject.SetActive(true);
     }
     
-    private void DeactivateCar(Car car)
+    private void DeactivateMovingObstacle(MovingObstacle movingObstacle)
     {
-        car.gameObject.SetActive(false);
+        movingObstacle.gameObject.SetActive(false);
     }
     
-    private void DestroyCar(Car car)
+    private void DestroyMovingObstacle(MovingObstacle movingObstacle)
     {
-        Destroy(car.gameObject);
+        Destroy(movingObstacle.gameObject);
     }
 
     private Road CreateRoadStart()
     {
-        Road roadInstance = Instantiate(roadStartPrefab, levelContainer.transform);
+        Road roadInstance = Instantiate(roadStartPrefab, roadContainer.transform);
         roadInstance.ObjectPool = RoadStartPool;
+        roadInstance.ObstaclePool = CarPool;
         return roadInstance;
     }
     
     private Road CreateRoadMiddle()
     {
-        Road roadInstance = Instantiate(roadMiddlePrefab, levelContainer.transform);
+        Road roadInstance = Instantiate(roadMiddlePrefab, roadContainer.transform);
         roadInstance.ObjectPool = RoadMiddlePool;
+        roadInstance.ObstaclePool = CarPool;
         return roadInstance;
     }
     
     private Road CreateRoadEnd()
     {
-        Road roadInstance = Instantiate(roadEndPrefab, levelContainer.transform);
+        Road roadInstance = Instantiate(roadEndPrefab, roadContainer.transform);
         roadInstance.ObjectPool = RoadEndPool;
+        roadInstance.ObstaclePool = CarPool;
         return roadInstance;
     }
 
-    private void ActivateRoad(Road road)
+    private void ActivateObstacleSpawner(ObstacleSpawner obstacleSpawner)
     {
-        road.gameObject.SetActive(true);
+        obstacleSpawner.gameObject.SetActive(true);
     }
 
-    private void DeactivateRoad(Road road)
+    private void DeactivateObstacleSpawner(ObstacleSpawner obstacleSpawner)
     {
-        road.gameObject.SetActive(false);
+        obstacleSpawner.gameObject.SetActive(false);
     }
 
-    private void DestroyRoad(Road road)
+    private void DestroyObstacleSpawner(ObstacleSpawner obstacleSpawner)
     {
-        Destroy(road.gameObject);
+        Destroy(obstacleSpawner.gameObject);
     }
 
     private River CreateRiver()
     {
-        River riverInstace = Instantiate(riverPrefab, levelContainer.transform);
-        riverInstace.ObjectPool = RiverPool;
-        return riverInstace;
+        River riverInstance = Instantiate(riverPrefab, riverContainer.transform);
+        riverInstance.ObjectPool = RiverPool;
+        riverInstance.ObstaclePool = LogPool;
+        return riverInstance;
     }
-
-    private void ActivateRiver(River river)
-    {
-        river.gameObject.SetActive(true);
-    }
-
-    private void DeactivateRiver(River river)
-    {
-        river.gameObject.SetActive(false);
-    }
-
-    private void DestroyRiver(River river)
-    {
-        Destroy(river.gameObject);
-    }
+    
 }

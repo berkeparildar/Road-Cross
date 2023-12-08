@@ -1,31 +1,29 @@
 using UnityEngine;
-using UnityEngine.Pool;
 
-public class River : MonoBehaviour
+public class River : ObstacleSpawner
 {
-    [SerializeField] private Renderer riverRenderer;
-    private IObjectPool<River> objectPool;
-    public IObjectPool<River> ObjectPool { set => objectPool = value; }
-    void Start()
+    private static bool _isLeft;
+
+    protected override void GetRandomValues()
     {
-        Debug.Log("I am a river");
+        base.GetRandomValues();
+        _isLeft = !_isLeft;
+        spawnCooldown += 2;
+        spawnDirection = _isLeft ? -30 : 30;
     }
 
-    private void OnEnable()
+    private void Update()
     {
-        Player.OnPlayerMoved += Deactivate;
+        ParentUpdate();
+        SpawnLogs();
     }
 
-    private void OnDisable()
+    private void SpawnLogs()
     {
-        Player.OnPlayerMoved -= Deactivate;
-    }
-    
-    private void Deactivate(Vector3 playerPosition)
-    {
-        if (playerPosition.z >= transform.position.z + 20)
+        spawnTimer += Time.deltaTime;
+        if (spawnTimer >= spawnCooldown)
         {
-            objectPool.Release(this);
+            SpawnObstacle();
         }
     }
 }

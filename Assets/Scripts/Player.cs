@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        Debug.DrawRay(transform.position, Vector3.down, Color.red);
         GetInput();
         MoveToPosition();
     }
@@ -53,6 +54,18 @@ public class Player : MonoBehaviour
                 * Time.deltaTime);
             if (transform.position == targetPosition)
             {
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, Vector3.down, out hit, 1f))
+                {
+                    if (hit.transform.gameObject.CompareTag("Log"))
+                    {
+                        transform.SetParent(hit.transform);
+                    }
+                    else
+                    {
+                        transform.SetParent(null);
+                    }
+                }
                 isMoving = false;
             }
         }
