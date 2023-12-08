@@ -1,19 +1,15 @@
+using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
+    
     [SerializeField] private float moveSpeed;
     [SerializeField] private int step;
     [SerializeField] private bool isMoving;
     [SerializeField] private Vector3 targetPosition;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static event Action<Vector3> OnPlayerMoved;
 
-    // Update is called once per frame
     private void Update()
     {
         GetInput();
@@ -23,6 +19,7 @@ public class Player : MonoBehaviour
     private void GetInput()
     {
         var currentPosition = transform.position;
+        OnPlayerMoved?.Invoke(currentPosition);
         if (!isMoving)
         {
             if (Input.GetKeyDown(KeyCode.A))
@@ -52,7 +49,8 @@ public class Player : MonoBehaviour
     {
         if (isMoving)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed
+                * Time.deltaTime);
             if (transform.position == targetPosition)
             {
                 isMoving = false;

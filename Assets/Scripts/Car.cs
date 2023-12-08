@@ -1,41 +1,77 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.Pool;
 
 public class Car : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private Vector3 direction;
     [SerializeField] private GameObject model;
-    // Start is called before the first frame update
+    [SerializeField] private float deactivationPoint;
+    [SerializeField] private Road road;
+    [SerializeField] private bool isGoingLeft;
+    private IObjectPool<Car> objectPool;
+    public IObjectPool<Car> ObjectPool { set => objectPool = value; }
+    public Road Road {set => road = value;}
     private void Awake()
     {
         model = transform.GetChild(0).gameObject;
     }
 
-    // Update is called once per frame
     private void Update()
     {
         transform.Translate(direction * (speed * Time.deltaTime));
+        Deactivate();
     }
 
     public void SetDirection(int spawnPosition)
     {
         if (spawnPosition == 30)
         {
-            model.transform.rotation = Quaternion.Euler(0, -90, 0);
-            direction = Vector3.left;
+            GoingLeft();
         }
         else
         {
-            model.transform.rotation = Quaternion.Euler(0, 90, 0);
-            direction = Vector3.right;
+            GoingRight();
         }
     }
 
     public void SetSpeed(float carSpeed)
     {
         speed = carSpeed;
+    }
+
+    private void Deactivate()
+    {
+        if (isGoingLeft && transform.position.x <= deactivationPoint && gameObject.activeSelf)
+        {
+            objectPool.Release(this);
+            road.RemoveFromList(this);
+        }
+        else if (!isGoingLeft && transform.position.x >= deactivationPoint && gameObject.activeSelf)
+        {
+            objectPool.Release(this);
+            road.RemoveFromList(this);
+        }
+    }
+
+    public void Release()
+    {
+        objectPool.Release(this);
+    }
+
+    private void GoingLeft()
+    {
+        model.transform.rotation = Quaternion.Euler(0, -90, 0);
+        deactivationPoint = -30;
+        direction = Vector3.left;
+        isGoingLeft = true;
+    }
+
+    private void GoingRight()
+    {
+        model.transform.rotation = Quaternion.Euler(0, 90, 0);
+        deactivationPoint = 30;
+        direction = Vector3.right;
+        isGoingLeft = false;
     }
 }

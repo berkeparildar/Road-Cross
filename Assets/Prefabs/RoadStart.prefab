@@ -1935,11 +1935,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnDirection: 0
+  player: {fileID: 0}
   spawnPosition: {x: 0, y: 0, z: 0}
   spawnCooldown: 0
-  carPrefab: {fileID: 7969141817325049335, guid: 2f889d17ebb3a4e7db2607e2ccb961cf, type: 3}
+  spawnPause: 0
   carSpeed: 0
-  spawnCount: 0
+  currentCarCount: 0
+  totalCarCount: 0
+  cars: []
+  startPauseTimer: 1
 --- !u!1 &8145925887374464344
 GameObject:
   m_ObjectHideFlags: 0
