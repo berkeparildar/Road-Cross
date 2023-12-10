@@ -8,7 +8,7 @@ public class River : ObstacleSpawner
     {
         base.GetRandomValues();
         _isLeft = !_isLeft;
-        spawnCooldown += 2;
+        spawnCooldown++;
         spawnDirection = _isLeft ? -30 : 30;
     }
 

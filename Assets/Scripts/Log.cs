@@ -4,22 +4,16 @@ public class Log : MovingObstacle
 {
     [SerializeField] private Material materialPrefab;
     [SerializeField] private Material materialInstance;
-    [SerializeField] private MeshRenderer renderer;
-    [SerializeField] private bool speedSet;
+    [SerializeField] private MeshRenderer logRenderer;
     private void OnEnable()
     {
         materialInstance = new Material(materialPrefab);
-        renderer.material = materialInstance;
+        logRenderer.material = materialInstance;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (speed != 0 && !speedSet)
-        {
-            speedSet = true;
-            SetScale();
-        }
+        SetScale();
         ParentUpdate();
     }
 

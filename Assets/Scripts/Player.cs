@@ -50,20 +50,16 @@ public class Player : MonoBehaviour
     {
         if (isMoving)
         {
+            transform.SetParent(null);
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed
                 * Time.deltaTime);
             if (transform.position == targetPosition)
             {
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position, Vector3.down, out hit, 1f))
+                if (Physics.Raycast(transform.position, Vector3.down, out var hit, 1f))
                 {
                     if (hit.transform.gameObject.CompareTag("Log"))
                     {
                         transform.SetParent(hit.transform);
-                    }
-                    else
-                    {
-                        transform.SetParent(null);
                     }
                 }
                 isMoving = false;

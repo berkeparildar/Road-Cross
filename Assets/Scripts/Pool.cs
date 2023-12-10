@@ -20,12 +20,20 @@ public class Pool : MonoBehaviour
     [SerializeField] private River riverPrefab;
     [SerializeField] private int riverCount;
     [SerializeField] private GameObject riverContainer;
+    [SerializeField] private Grass grassPrefab;
+    [SerializeField] private int grassCount;
+    [SerializeField] private GameObject grassContainer;
+    [SerializeField] private Trees treePrefab;
+    [SerializeField] private int treeCount;
+    [SerializeField] private GameObject treeContainer;
     public IObjectPool<MovingObstacle> CarPool;
     public IObjectPool<MovingObstacle> LogPool;
     public IObjectPool<ObstacleSpawner> RoadStartPool;
     public IObjectPool<ObstacleSpawner> RoadMiddlePool;
     public IObjectPool<ObstacleSpawner> RoadEndPool;
     public IObjectPool<ObstacleSpawner> RiverPool;
+    public IObjectPool<Grass> GrassPool;
+    public IObjectPool<Trees> TreePool;
 
     private void Awake()
     {
@@ -37,6 +45,8 @@ public class Pool : MonoBehaviour
         CarPool = new ObjectPool<MovingObstacle>(CreateCar, ActivateMovingObstacle, DeactivateMovingObstacle, DestroyMovingObstacle, true, carCount, carCount * 2);
         LogPool = new ObjectPool<MovingObstacle>(CreateLog, ActivateMovingObstacle, DeactivateMovingObstacle,
             DestroyMovingObstacle, true, logCount, logCount * 2);
+        TreePool = new ObjectPool<Trees>(CreateTree, ActivateTree, DeactivateTree, DestroyTree, true, treeCount, 
+            treeCount * 2);
         RoadStartPool = new ObjectPool<ObstacleSpawner>(CreateRoadStart, ActivateObstacleSpawner, DeactivateObstacleSpawner, DestroyObstacleSpawner, true,
             roadStartCount, roadStartCount * 2);
         RoadMiddlePool = new ObjectPool<ObstacleSpawner>(CreateRoadMiddle, ActivateObstacleSpawner, DeactivateObstacleSpawner, DestroyObstacleSpawner, true,
@@ -46,6 +56,8 @@ public class Pool : MonoBehaviour
         RiverPool = new ObjectPool<ObstacleSpawner>(CreateRiver, ActivateObstacleSpawner, DeactivateObstacleSpawner, 
             DestroyObstacleSpawner, true,
             riverCount, riverCount * 2);
+        GrassPool = new ObjectPool<Grass>(CreateGrass, ActivateGrass, DeactivateGrass, DestroyGrass, true,
+            grassCount, grassCount * 2);
     }
 
     private Log CreateLog()
@@ -60,6 +72,44 @@ public class Pool : MonoBehaviour
         Car carInstance = Instantiate(carPrefab, carContainer.transform);
         carInstance.ObjectPool = CarPool;
         return carInstance;
+    }
+    
+    private River CreateRiver()
+    {
+        River riverInstance = Instantiate(riverPrefab, riverContainer.transform);
+        riverInstance.ObjectPool = RiverPool;
+        riverInstance.ObstaclePool = LogPool;
+        return riverInstance;
+    }
+
+    private Grass CreateGrass()
+    {
+        Grass grassInstance = Instantiate(grassPrefab, grassContainer.transform);
+        grassInstance.ObjectPool = GrassPool;
+        grassInstance.TreePool = TreePool;
+        return grassInstance;
+    }
+    
+    private Trees CreateTree()
+    {
+        Trees treeInstance = Instantiate(treePrefab, treeContainer.transform);
+        treeInstance.ObjectPool = TreePool;
+        return treeInstance;
+    }
+
+    private void ActivateTree(Trees tree)
+    {
+        tree.gameObject.SetActive(true);
+    }
+
+    private void DeactivateTree(Trees tree)
+    {
+        tree.gameObject.SetActive(false);
+    }
+
+    private void DestroyTree(Trees tree)
+    {
+        Destroy(tree.gameObject);
     }
 
     private void ActivateMovingObstacle(MovingObstacle movingObstacle)
@@ -115,13 +165,19 @@ public class Pool : MonoBehaviour
     {
         Destroy(obstacleSpawner.gameObject);
     }
-
-    private River CreateRiver()
-    {
-        River riverInstance = Instantiate(riverPrefab, riverContainer.transform);
-        riverInstance.ObjectPool = RiverPool;
-        riverInstance.ObstaclePool = LogPool;
-        return riverInstance;
-    }
     
+    private void ActivateGrass(Grass grass)
+    {
+        grass.gameObject.SetActive(true);
+    }
+
+    private void DeactivateGrass(Grass grass)
+    {
+        grass.gameObject.SetActive(false);
+    }
+
+    private void DestroyGrass(Grass grass)
+    {
+        Destroy(grass.gameObject);
+    }
 }

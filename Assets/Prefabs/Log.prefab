@@ -125,5 +125,5 @@ MonoBehaviour:
   obstacleSpawner: {fileID: 0}
   materialPrefab: {fileID: 2100000, guid: 934104f02b50f574ba4d14ffa1b4e55a, type: 2}
   materialInstance: {fileID: 0}
-  renderer: {fileID: 6550663043931262875}
+  logRenderer: {fileID: 6550663043931262875}
   speedSet: 0

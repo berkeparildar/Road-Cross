@@ -4,7 +4,6 @@ public class GameManager : MonoBehaviour
 {
     
     [SerializeField] private GameObject riverPrefab;
-    [SerializeField] private GameObject grassPrefab;
     [SerializeField] private float currentPosition;
     [SerializeField] private int levelSelector; // This will be used to control what is being generated
     [SerializeField] private bool currentlyBeingGenerated;
@@ -60,7 +59,9 @@ public class GameManager : MonoBehaviour
         {
             targetSpawnPosition += 3;
             defaultGrassPosition.z = currentPosition;
-            Instantiate(grassPrefab, defaultGrassPosition, Quaternion.identity);
+            var grass = Pool.SharedInstance.GrassPool.Get();
+            grass.transform.position = defaultGrassPosition;
+            grass.Instantiate();
             currentPosition += 3;
         }
         levelSelector++;
