@@ -53,7 +53,7 @@ public class ObstacleSpawner : MonoBehaviour
         var seed = Guid.NewGuid().GetHashCode();
         Random.InitState(seed);
         spawnCooldown = Random.Range(1f, 5f);
-        obstacleSpeed = Random.Range(4, 8);
+        obstacleSpeed = Random.Range(3, 9);
     }
     
     protected void ParentUpdate()
