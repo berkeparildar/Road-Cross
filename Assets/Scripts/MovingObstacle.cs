@@ -20,7 +20,7 @@ public class MovingObstacle : MonoBehaviour
     
     public void SetDirection(int spawnPosition)
     {
-        if (spawnPosition == 30)
+        if (spawnPosition == 50)
         {
             GoingLeft();
         }
@@ -56,14 +56,14 @@ public class MovingObstacle : MonoBehaviour
 
     protected virtual void GoingLeft()
     {
-        deactivationPoint = -30;
+        deactivationPoint = -50;
         direction = Vector3.left;
         isGoingLeft = true;
     }
 
     protected virtual void GoingRight()
     {
-        deactivationPoint = 30;
+        deactivationPoint = 50;
         direction = Vector3.right;
         isGoingLeft = false;
     }

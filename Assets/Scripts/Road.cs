@@ -18,11 +18,11 @@ public class Road : ObstacleSpawner
         var halfChance = Random.Range(0, 2);
         if (halfChance == 0)
         {
-            spawnDirection = 30;
+            spawnDirection = 50;
         }
         else
         {
-            spawnDirection = -30;
+            spawnDirection = -50;
         }
     }
 

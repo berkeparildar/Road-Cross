@@ -9,7 +9,7 @@ public class River : ObstacleSpawner
         base.GetRandomValues();
         _isLeft = !_isLeft;
         spawnCooldown++;
-        spawnDirection = _isLeft ? -30 : 30;
+        spawnDirection = _isLeft ? -50 : 50;
     }
 
     private void Update()

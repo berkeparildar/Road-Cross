@@ -18,12 +18,12 @@ public class GameManager : MonoBehaviour
     {
         currentPosition = 15;
         levelSelector = 1;
-        targetSpawnPosition = -18;
+        targetSpawnPosition = -30;
     }
 
     private void Update()
     {
-        if (player.transform.position.z >= targetSpawnPosition - 18)
+        if (player.transform.position.z >= targetSpawnPosition - 30)
         {
             GenerateLevel();
         }

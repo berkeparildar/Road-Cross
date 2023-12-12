@@ -21,7 +21,7 @@ public class Grass : MonoBehaviour
 
     private void OnEnable()
     {
-        treeCount = Random.Range(0, 5);
+        treeCount = Random.Range(0, 8);
         Player.OnPlayerMoved += Deactivate;
         trees.Clear();
     }
