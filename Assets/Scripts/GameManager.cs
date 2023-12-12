@@ -1,9 +1,9 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     
-    [SerializeField] private GameObject riverPrefab;
     [SerializeField] private float currentPosition;
     [SerializeField] private int levelSelector; // This will be used to control what is being generated
     [SerializeField] private bool currentlyBeingGenerated;
@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Vector3 defaultRoadPosition;
     [SerializeField] private float targetSpawnPosition;
     [SerializeField] private Player player;
+    [SerializeField] private GameObject endUI;
     
     private void Start()
     {
@@ -103,5 +104,25 @@ public class GameManager : MonoBehaviour
         var roadEnd = Pool.SharedInstance.RoadEndPool.Get();
         roadEnd.transform.position = defaultRoadPosition;
         levelSelector = 1;
+    }
+
+    private void OnEnable()
+    {
+        Player.IsHit += GameOver;
+    }
+
+    private void OnDisable()
+    {
+        Player.IsHit -= GameOver;
+    }
+    
+    private void GameOver()
+    {
+        endUI.SetActive(true);
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(0);
     }
 }

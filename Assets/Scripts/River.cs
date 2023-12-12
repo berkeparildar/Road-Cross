@@ -15,6 +15,7 @@ public class River : ObstacleSpawner
     private void Update()
     {
         ParentUpdate();
+        spawnPosition.y = -0.5f;
         SpawnLogs();
     }
 

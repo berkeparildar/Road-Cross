@@ -1,4 +1,5 @@
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Car : MovingObstacle
 {
@@ -48,10 +49,9 @@ public class Car : MovingObstacle
         {
             return false;
         }
-
         return true;
     }
-
+    
     private void TurnCollider()
     {
         var newSize = Vector3.zero;

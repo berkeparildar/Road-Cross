@@ -11,12 +11,13 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector3 direction;
     [SerializeField] private bool hasObstacleInDirection;
     public static event Action<Vector3> OnPlayerMoved;
+    public static event Action IsHit;
     [SerializeField] private bool gotInput;
     
 
     private void Update()
     {
-        Debug.DrawRay(transform.position, direction * step, Color.red);
+        Debug.DrawRay(transform.position, Vector3.down, Color.red);
         GetInput();
         if (!isMoving)
         {
@@ -89,16 +90,45 @@ public class Player : MonoBehaviour
             if (transform.position == targetPosition)
             {
                 
-                if (Physics.Raycast(transform.position, Vector3.down, out var hit, 2f))
+                if (Physics.Raycast(transform.position, Vector3.down, out var hit, 0.8f))
                 {
-                    if (hit.transform.gameObject.CompareTag("Log"))
+                    if (hit.transform.CompareTag("Log"))
                     {
                         transform.SetParent(hit.transform);
+                        hit.transform.GetComponent<Log>().Sink();
+                    }
+                    else if (hit.transform.CompareTag("Water"))
+                    {
+                        IsHit?.Invoke();
                     }
                 }
                 isMoving = false;
                 gotInput = false;
             }
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Car"))
+        {
+            IsHit?.Invoke();
+            moveSpeed = 0;
+        }
+    }
+
+    private void OnEnable()
+    {
+        Log.IsSinking += IsSinking;
+    }
+
+    private void OnDisable()
+    {
+        Log.IsSinking -= IsSinking;
+    }
+
+    private void IsSinking(bool isSinking)
+    {
+        isMoving = isSinking;
     }
 }

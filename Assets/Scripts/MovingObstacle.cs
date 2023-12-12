@@ -8,8 +8,8 @@ public class MovingObstacle : MonoBehaviour
     [SerializeField] protected float deactivationPoint;
     [SerializeField] protected bool isGoingLeft;
     [SerializeField] protected ObstacleSpawner obstacleSpawner;
-    protected IObjectPool<MovingObstacle> objectPool;
-    public IObjectPool<MovingObstacle> ObjectPool { set => objectPool = value; }
+    private IObjectPool<MovingObstacle> _objectPool;
+    public IObjectPool<MovingObstacle> ObjectPool { set => _objectPool = value; }
     public ObstacleSpawner ObstacleSpawner { set => obstacleSpawner = value; }
 
     protected void ParentUpdate()
@@ -30,7 +30,7 @@ public class MovingObstacle : MonoBehaviour
         }
     }
     
-    public void SetSpeed(float obstacleSpeed)
+    public virtual void SetSpeed(float obstacleSpeed)
     {
         speed = obstacleSpeed;
     }
@@ -40,18 +40,18 @@ public class MovingObstacle : MonoBehaviour
         if (isGoingLeft && transform.position.x <= deactivationPoint && gameObject.activeSelf)
         {
             obstacleSpawner.RemoveFromList(this);
-            objectPool.Release(this);
+            _objectPool.Release(this);
         }
         else if (!isGoingLeft && transform.position.x >= deactivationPoint && gameObject.activeSelf)
         {
             obstacleSpawner.RemoveFromList(this);
-            objectPool.Release(this);
+            _objectPool.Release(this);
         }
     }
     
     public void Release()
     {
-        objectPool.Release(this);
+        _objectPool.Release(this);
     }
 
     protected virtual void GoingLeft()
