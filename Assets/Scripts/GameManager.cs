@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,9 +14,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float targetSpawnPosition;
     [SerializeField] private Player player;
     [SerializeField] private GameObject endUI;
-    
+    [SerializeField] private int score;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private bool gameStart;
+    [SerializeField] private GameObject startUI;
+    [SerializeField] private GameObject gameUI;
+    [SerializeField] private GameObject fadeIn;
+    [SerializeField] private int topScore;
+    [SerializeField] private TextMeshProUGUI topScoreTM;
+    [SerializeField] private TextMeshProUGUI endScore;
+    [SerializeField] private GameObject fadeTitle;
+    [SerializeField] private GameObject startTitle;
+
     private void Start()
     {
+        topScore = PlayerPrefs.GetInt("TopScore", 0);
         currentPosition = 15;
         levelSelector = 1;
         targetSpawnPosition = -30;
@@ -23,10 +36,13 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        StartGame();
+        UpdateUI();
         if (player.transform.position.z >= targetSpawnPosition - 30)
         {
             GenerateLevel();
         }
+        
     }
 
     private void GenerateLevel()
@@ -118,11 +134,52 @@ public class GameManager : MonoBehaviour
     
     private void GameOver()
     {
+        endScore.text = score.ToString();
+        if (score > topScore)
+        {
+            topScoreTM.text = "TOP: " + score;
+            PlayerPrefs.SetInt("TopScore", score);
+        }
+        else
+        {
+            topScoreTM.text = "TOP: " + topScore;
+        }
         endUI.SetActive(true);
+    }
+
+    public void ReloadLevel()
+    {
+        fadeIn.SetActive(true);
+        Invoke(nameof(RestartLevel), 1);
     }
 
     public void RestartLevel()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void IncreaseScore()
+    {
+        score++;
+    }
+
+    public void DecreaseScore()
+    {
+        score--;
+    }
+    
+    private void UpdateUI()
+    {
+        scoreText.text = score.ToString();
+    }
+
+    private void StartGame()
+    {
+        if (Input.touchCount <= 0 || gameStart) return;
+        fadeTitle.SetActive(false);
+        startTitle.SetActive(true);
+        gameStart = true;
+        startUI.SetActive(false);
+        gameUI.SetActive(true);
     }
 }

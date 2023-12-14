@@ -5,25 +5,25 @@ using Random = UnityEngine.Random;
 
 public class Grass : MonoBehaviour
 {
-    private List<Trees> trees;
-    private IObjectPool<Grass> objectPool;
-    public IObjectPool<Grass> ObjectPool { set => objectPool = value; }
-    private IObjectPool<Trees> treePool;
-    public IObjectPool<Trees> TreePool { set => treePool = value; }
+    private List<Trees> _trees;
+    private IObjectPool<Grass> _objectPool;
+    public IObjectPool<Grass> ObjectPool { set => _objectPool = value; }
+    private IObjectPool<Trees> _treePool;
+    public IObjectPool<Trees> TreePool { set => _treePool = value; }
     [SerializeField] private int treeSpawnPosition;
     [SerializeField] private int treeCount;
     [SerializeField] private List<int> spawnPositions;
 
     private void Awake()
     {
-        trees = new List<Trees>();
+        _trees = new List<Trees>();
     }
 
     private void OnEnable()
     {
         treeCount = Random.Range(0, 8);
         Player.OnPlayerMoved += Deactivate;
-        trees.Clear();
+        _trees.Clear();
     }
 
     public void Instantiate()
@@ -40,12 +40,12 @@ public class Grass : MonoBehaviour
     {
         if (playerPosition.z >= transform.position.z + 20)
         {
-            foreach (var obstacle in trees)
+            foreach (var obstacle in _trees)
             {
                 spawnPositions.Add(obstacle.currentPosition);
                 obstacle.Release();
             }
-            objectPool.Release(this);
+            _objectPool.Release(this);
         }
     }
 
@@ -54,11 +54,11 @@ public class Grass : MonoBehaviour
         for (int i = 0; i < treeCount; i++)
         {
             treeSpawnPosition = spawnPositions[Random.Range(0, spawnPositions.Count)];
-            var tree = treePool.Get();
+            var tree = _treePool.Get();
             tree.currentPosition = treeSpawnPosition;
             spawnPositions.Remove(treeSpawnPosition);
             tree.transform.position = new Vector3(treeSpawnPosition, 0, transform.position.z);
-            trees.Add(tree);
+            _trees.Add(tree);
         }
     }
 }
