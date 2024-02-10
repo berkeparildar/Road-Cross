@@ -1,0 +1,29 @@
+{
+  "genre": "Arcade Game",
+  "title": "Road Cross",
+  "repoLink": "https://github.com/berkeparildar/Road-Cross",
+  "imageUrl": "assets/pictures/roadcross/logo.png",
+  "description": "Road Cross is a mobile game where players take control of a adventurous chicken attempting to cross busy roads and rivers. The objective is to navigate through the traffic and obstacles, avoiding collisions and reaching the other side to earn points.",
+  "titleOne": "Features",
+  "partOne": "Simple and addictive endless gameplay._Earn points for successful crossings and compete for high scores._Enjoyable for quick rounds of gaming on mobile devices._Voxel-style graphics for a charming and visually appealing experience.",
+  "titleTwo": "How to Play",
+  "partTwo": "Swipe in the desired direction to move the chicken: up, down, left, or right._Cross roads and rivers without getting hit by vehicles or falling into the water._Earn points for each successful crossing._The game ends if the chicken collides with a vehicle or falls into the water.",
+  "videoId": "https://www.youtube.com/embed/D_ytC4uhcgg",
+  "imageOnePath": "assets/pictures/1.gif",
+  "imageTwoPath": "assets/pictures/2.gif",
+  "imageThreePath": "assets/pictures/3.gif",
+  "hasVideo": true,
+  "hasStore": true,
+  "storeUrl": "https://play.google.com/store/apps/details?id=com.bprldr.RoadCross",
+  "tagCount": 3,
+  "tags": [
+    "Unity",
+    "C_",
+    "Mobile Game"
+  ],
+  "isPortait": true,
+  "thumbnailOnePath": "assets/pictures/th1.jpg",
+  "thumbnailTwoPath": "assets/pictures/th2.jpg",
+  "thumbnailThreePath": "assets/pictures/th3.jpg",
+  "thumbnailString": "Play as an adventurous chicken attempting to cross busy roads and rivers. The objective is to navigate through the traffic and obstacles and reach to the other side."
+}
