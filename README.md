@@ -1,4 +1,4 @@
-[![Badge 1](media/pf.png)](https://berkeparildar.github.io/Games/)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[![Badge 1](media/pf.png)](https://berkeparildar.github.io/games/)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [![Badge 2](media/ty.png)](https://youtu.be/D_ytC4uhcgg)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [![Badge 3](media/gp.png)](https://play.google.com/store/apps/details?id=com.bprldr.RoadCross)
 # Road Cross
