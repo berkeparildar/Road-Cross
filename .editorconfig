@@ -1,0 +1,54 @@
+root = true
+
+# All files
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = crlf
+charset = utf-8-bom
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# C# files
+[*.cs]
+dotnet_sort_system_directives_first = true
+dotnet_diagnostic.IDE0130.severity = none
+
+# Naming rules
+dotnet_naming_rule.public_member_should_be_camelcase.severity = warning
+dotnet_naming_rule.public_member_should_be_camelcase.symbols = public_members
+dotnet_naming_rule.public_member_should_be_camelcase.style = camelcase
+
+dotnet_naming_rule.private_field_should_be_underscore_prefixed.severity = warning
+dotnet_naming_rule.private_field_should_be_underscore_prefixed.symbols = private_fields
+dotnet_naming_rule.private_field_should_be_underscore_prefixed.style = underscore_prefix
+
+dotnet_naming_rule.const_should_be_all_caps.severity = warning
+dotnet_naming_rule.const_should_be_all_caps.symbols = constants
+dotnet_naming_rule.const_should_be_all_caps.style = all_caps
+
+# Symbol groups
+dotnet_naming_symbols.public_members.applicable_kinds = field
+dotnet_naming_symbols.public_members.applicable_accessibilities = public
+dotnet_naming_symbols.public_members.required_modifiers = none
+
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+dotnet_naming_symbols.private_fields.required_modifiers = none
+
+dotnet_naming_symbols.constants.applicable_kinds = field
+dotnet_naming_symbols.constants.applicable_accessibilities = public, private
+dotnet_naming_symbols.constants.required_modifiers = const
+
+# Naming styles
+dotnet_naming_style.camelcase.capitalization = camel_case
+dotnet_naming_style.camelcase.required_prefix = 
+dotnet_naming_style.camelcase.required_suffix = 
+
+dotnet_naming_style.underscore_prefix.capitalization = camel_case
+dotnet_naming_style.underscore_prefix.required_prefix = _
+dotnet_naming_style.underscore_prefix.required_suffix = 
+
+dotnet_naming_style.all_caps.capitalization = all_upper
+dotnet_naming_style.all_caps.required_prefix = 
+dotnet_naming_style.all_caps.required_suffix = 
