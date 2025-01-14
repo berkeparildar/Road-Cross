@@ -15,10 +15,10 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
+public partial class @InputController: IInputActionCollection2, IDisposable
 {
     public InputActionAsset asset { get; }
-    public @PlayerInputActions()
+    public @InputController()
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""PlayerInputActions"",
@@ -80,9 +80,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Swipe = m_Player.FindAction("Swipe", throwIfNotFound: true);
     }
 
-    ~@PlayerInputActions()
+    ~@InputController()
     {
-        UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInputActions.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, InputController.Player.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -148,8 +148,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Swipe;
     public struct PlayerActions
     {
-        private @PlayerInputActions m_Wrapper;
-        public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        private @InputController m_Wrapper;
+        public PlayerActions(@InputController wrapper) { m_Wrapper = wrapper; }
         public InputAction @Touch => m_Wrapper.m_Player_Touch;
         public InputAction @Swipe => m_Wrapper.m_Player_Swipe;
         public InputActionMap Get() { return m_Wrapper.m_Player; }

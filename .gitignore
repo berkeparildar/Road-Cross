@@ -239,3 +239,4 @@ sysinfo.txt
 *.keystore
 upload_certificate.pem
 /.idea
+/.vscode
