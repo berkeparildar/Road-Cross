@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private int step;
-    [SerializeField] private bool isMoving;
-    [SerializeField] private Vector3 targetPosition;
-    [SerializeField] private Vector3 direction;
-    [SerializeField] private bool hasObstacleInDirection;
+
+   /*
     [SerializeField] private GameObject model;
     [SerializeField] private bool atTop;
     [SerializeField] private bool jump;
@@ -18,18 +13,11 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     [SerializeField] private BoxCollider boxCollider;
-    [SerializeField] private int rightBound;
-    [SerializeField] private int leftBound;
     [SerializeField] private int jumpHeight;
     [SerializeField] private bool shouldFall;
     [SerializeField] private GameObject waterSplash;
     [SerializeField] private GameManager gameManager;
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip grassSound;
-    [SerializeField] private AudioClip roadSound;
-    [SerializeField] private AudioClip logSound;
-    [SerializeField] private AudioClip splashSound;
-    [SerializeField] private AudioClip crashSound;
+
     [SerializeField] private GameObject riverSound;
     public static event Action<Vector3> OnPlayerMoved;
     public static event Action IsHit;
@@ -37,114 +25,25 @@ public class Player : MonoBehaviour
     private static readonly int JumpTrigger = Animator.StringToHash("jump");
     private static readonly int Crash = Animator.StringToHash("crash");
     private static readonly int Squeeze = Animator.StringToHash("squeeze");
-    [SerializeField] private Vector2 touchDownPosition;
-    [SerializeField] private Vector2 touchUpPosition;
-
 
     private void Update()
     {
-        Debug.DrawRay(transform.position, Vector3.down, Color.red);
         FallDownToRiver();
-        TouchControl();
-        CheckObstacles();
         CheckPlayerBounds();
         MoveToPosition();
         JumpModel();
         StopCameraOutOfBounds();
     }
 
-    private void TouchControl()
-    {
-        if (!isMoving && Input.touchCount > 0)
-        {
-            var touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
-            {
-                touchDownPosition = touch.position;
-            }
-
-            if (touch.phase == TouchPhase.Ended)
-            {
-                touchUpPosition = touch.position;
-                CalculateDirection();
-            }
-        }
-    }
-
-    private void CalculateDirection()
-    {
-        var currentPosition = transform.position;
-        OnPlayerMoved?.Invoke(currentPosition);
-        if (touchUpPosition.x - touchDownPosition.x > 100)
-        {
-            direction = Vector3.right;
-            gotInput = true;
-            targetPosition = new Vector3(currentPosition.x + step, currentPosition.y, currentPosition.z);
-            model.transform.rotation = Quaternion.Euler(0, 90, 0);
-        }
-        else if (touchUpPosition.x - touchDownPosition.x < -100)
-        {
-            gotInput = true;
-            direction = Vector3.left;
-            targetPosition = new Vector3(currentPosition.x - step, currentPosition.y, currentPosition.z);
-            model.transform.rotation = Quaternion.Euler(0, -90, 0);
-        }
-        else if (touchUpPosition.y - touchDownPosition.y < -100)
-        {
-            direction = Vector3.back;
-            gotInput = true;
-            targetPosition = new Vector3(currentPosition.x, currentPosition.y, currentPosition.z - step);
-            model.transform.rotation = Quaternion.Euler(0, 180, 0);
-        }
-        else
-        {
-            direction = Vector3.forward;
-            gotInput = true;
-            targetPosition = new Vector3(currentPosition.x, currentPosition.y, currentPosition.z + step);
-            model.transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-    }
-
-    private void CheckObstacles()
-    {
-        if (!isMoving)
-        {
-            if (Physics.Raycast(transform.position, direction, out var hit, step))
-            {
-                if (hit.transform.gameObject.CompareTag("Tree"))
-                {
-                    hasObstacleInDirection = true;
-                    gotInput = false;
-                }
-                else
-                {
-                    hasObstacleInDirection = false;
-                }
-            }
-            else
-            {
-                hasObstacleInDirection = false;
-            }
-        }
-    }
-
     private void MoveToPosition()
     {
-        var currentPosition = transform.position;
         if (!hasObstacleInDirection && gotInput && !shouldFall)
         {
-            isMoving = true;
-            transform.SetParent(null);
-            transform.position = Vector3.MoveTowards(currentPosition, targetPosition, moveSpeed
-                * Time.deltaTime);
-            if (transform.position == targetPosition)
-            {
-                
                 if (Physics.Raycast(transform.position, Vector3.down, out var hit, 1f))
                 {
                     switch (hit.transform.tag)
                     {
-                        case "Grass": 
+                        case "Grass":
                             PlaySound(0);
                             break;
                         case "Log":
@@ -182,7 +81,7 @@ public class Player : MonoBehaviour
         if (other.CompareTag("Car"))
         {
             var contactPoint = transform.position;
-            var colliderCenter = other.bounds.center; 
+            var colliderCenter = other.bounds.center;
             var contactDifference = contactPoint - colliderCenter;
             if (Mathf.Abs(contactDifference.x) > Mathf.Abs(contactDifference.z))
             {
@@ -246,39 +145,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void CheckPlayerBounds()
-    {
-        if (!isMoving)
-        {
-            if (transform.position.x + step >= rightBound && direction == Vector3.right)
-            {
-                hasObstacleInDirection = true;
-            }
-
-            if (transform.position.x - step <= leftBound && direction == Vector3.left)
-            {
-                hasObstacleInDirection = true;
-            }
-
-            if (transform.position.z <= step && direction == Vector3.back)
-            {
-                hasObstacleInDirection = true;
-            }
-        
-            if (transform.position.x > rightBound + 1 || transform.position.x < leftBound - 1)
-            {
-                IsHit?.Invoke();
-                moveSpeed = 0;
-                enabled = false;
-            }
-            
-            if (gotInput && !hasObstacleInDirection)
-            {
-                Jump();
-            }
-        }
-    }
-
     private void Jump()
     {
         animator.SetTrigger(JumpTrigger);
@@ -297,7 +163,7 @@ public class Player : MonoBehaviour
     {
         if (transform.position.x > rightBound + 1 || transform.position.x < leftBound - 1)
         {
-         StopCameras();   
+         StopCameras();
         }
     }
 
@@ -317,27 +183,5 @@ public class Player : MonoBehaviour
         virtualCamera.m_LookAt = null;
         virtualCamera.m_Follow = null;
     }
-
-    private void PlaySound(int index)
-    {
-        switch (index)
-        {
-            case 0:
-                audioSource.clip = grassSound;
-                break;
-            case 1:
-                audioSource.clip = roadSound;
-                break;
-            case 2:
-                audioSource.clip = logSound;
-                break;
-            case 3:
-                audioSource.clip = splashSound;
-                break;
-            case 4:
-                audioSource.clip = crashSound;
-                break;
-        }
-        audioSource.Play();
-    }
+    */
 }

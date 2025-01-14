@@ -22,7 +22,7 @@ public class Grass : MonoBehaviour
     private void OnEnable()
     {
         treeCount = Random.Range(0, 8);
-        Player.OnPlayerMoved += Deactivate;
+        //Player.OnPlayerMoved += Deactivate;
         _trees.Clear();
     }
 
@@ -33,7 +33,7 @@ public class Grass : MonoBehaviour
 
     private void OnDisable()
     {
-        Player.OnPlayerMoved -= Deactivate;
+        //Player.OnPlayerMoved -= Deactivate;
     }
 
     private void Deactivate(Vector3 playerPosition)

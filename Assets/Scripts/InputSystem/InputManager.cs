@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace InputSystem
 {
@@ -9,8 +11,8 @@ namespace InputSystem
         public static UnityAction<SwipeDirection> OnSwipe;
         private InputController _controller;
         private Vector2 _swipeDirection;
-        
-        [SerializeField] private float minSwipeDistance;
+
+        [SerializeField] private float _minSwipeDistance;
 
         private void Awake()
         {
@@ -27,24 +29,39 @@ namespace InputSystem
 
         private void ProcessTouchComplete(InputAction.CallbackContext context)
         {
-            if (_swipeDirection.magnitude < minSwipeDistance) return;
+            Debug.Log("Swipe Called");
+            Debug.Log("Magnitude: " + _swipeDirection.magnitude);
+            if (_swipeDirection.magnitude < _minSwipeDistance) return;
 
-            if (_swipeDirection.x > 0)
+            if (Mathf.Abs(_swipeDirection.x) > Mathf.Abs(_swipeDirection.y))
             {
-                OnSwipe?.Invoke(SwipeDirection.Right);
+                if (_swipeDirection.x > 0)
+                {
+                    OnSwipe?.Invoke(SwipeDirection.Right);
+                }
+                else
+                {
+                    OnSwipe?.Invoke(SwipeDirection.Left);
+                }
             }
-            else if (_swipeDirection.x < 0)
+            else
             {
-                OnSwipe?.Invoke(SwipeDirection.Left);
+                if (_swipeDirection.y > 0)
+                {
+                    OnSwipe?.Invoke(SwipeDirection.Up);
+                }
+                else
+                {
+                    OnSwipe?.Invoke(SwipeDirection.Down);
+                }
             }
-            else if (_swipeDirection.y > 0)
-            {
-                OnSwipe?.Invoke(SwipeDirection.Up);
-            }
-            else if (_swipeDirection.y < 0)
-            {
-                OnSwipe?.Invoke(SwipeDirection.Down);
-            }
+        }
+
+        private void OnDestroy()
+        {
+            _controller.Player.Touch.canceled -= ProcessTouchComplete;
+            _controller.Player.Swipe.performed -= ProcessSwipeDelta;
+            _controller.Player.Disable();
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    
+
     [SerializeField] private float currentPosition;
     [SerializeField] private int levelSelector; // This will be used to control what is being generated
     [SerializeField] private bool currentlyBeingGenerated;
@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Vector3 defaultRiverPosition;
     [SerializeField] private Vector3 defaultRoadPosition;
     [SerializeField] private float targetSpawnPosition;
-    [SerializeField] private Player player;
+    [SerializeField] private GameObject player;
     [SerializeField] private GameObject endUI;
     [SerializeField] private int score;
     [SerializeField] private TextMeshProUGUI scoreText;
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         {
             GenerateLevel();
         }
-        
+
     }
 
     private void GenerateLevel()
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
         }
         currentlyBeingGenerated = false;
     }
-    
+
     private void GenerateGrass()
     {
         var grassCount = Random.Range(1, 3);
@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
         }
         levelSelector++;
     }
-    
+
     private void GenerateRoad()
     {
         defaultRoadPosition.z = currentPosition;
@@ -124,14 +124,14 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Player.IsHit += GameOver;
+        //Player.IsHit += GameOver;
     }
 
     private void OnDisable()
     {
-        Player.IsHit -= GameOver;
+        //Player.IsHit -= GameOver;
     }
-    
+
     private void GameOver()
     {
         endScore.text = score.ToString();
@@ -167,7 +167,7 @@ public class GameManager : MonoBehaviour
     {
         score--;
     }
-    
+
     private void UpdateUI()
     {
         scoreText.text = score.ToString();

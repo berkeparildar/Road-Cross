@@ -1,6 +1,10 @@
+using System;
+using Extensions;
+using InputSystem;
 using UnityEngine;
+using UnityEngine.Events;
 
-namespace PlayerSystem 
+namespace PlayerSystem
 {
     public class PlayerBoundsController : MonoBehaviour
     {
@@ -8,17 +12,45 @@ namespace PlayerSystem
         private const int MAP_LEFT_BOUNDS = -24;
         private const int STEP = 3;
 
-        public void CheckWorldBounds()
+        public bool CheckWorldBounds(SwipeDirection direction)
         {
-            var currentPosition = transform.position;
-            
-            var isWithinRightBounds = currentPosition.x < MAP_RIGHT_BOUNDS - STEP;
-            var isWithinLeftBounds = currentPosition.x > MAP_LEFT_BOUNDS + STEP;
-            var isWithinBottomBounds = currentPosition.z > 
-            if (transform.position.x < MAP_RIGHT_BOUNDS - STEP)
+            switch (direction)
             {
-                
+                case SwipeDirection.Right:
+                    if (transform.position.x < MAP_RIGHT_BOUNDS - STEP)
+                    {
+                        return true;
+                    }
+                    break;
+                case SwipeDirection.Left:
+                    if (transform.position.x > MAP_LEFT_BOUNDS + STEP)
+                    {
+                        return true;
+                    }
+                    break;
+                case SwipeDirection.Up:
+                    return true;
+                case SwipeDirection.Down:
+                    if (transform.position.z > STEP)
+                    {
+                        return true;
+                    }
+                    break;
             }
+            return false;
+        }
+
+        public bool CheckObstacle(SwipeDirection direction)
+        {
+            var vector = InputExtensions.GetSwipeDirection(direction);
+            if (Physics.Raycast(transform.position, vector, out var hit, STEP))
+            {
+                if (hit.transform.gameObject.CompareTag("Tree"))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

@@ -33,8 +33,8 @@ public class ObstacleSpawner : MonoBehaviour
 
     private void OnEnable()
     {
-        Player.OnPlayerMoved += Deactivate;
-        Player.IsHit += GameOver;
+        //Player.OnPlayerMoved += Deactivate;
+        //Player.IsHit += GameOver;
         _obstacles.Clear();
         GetRandomValues();
         spawnTimer = spawnCooldown;
@@ -42,8 +42,8 @@ public class ObstacleSpawner : MonoBehaviour
 
     private void OnDisable()
     {
-        Player.OnPlayerMoved -= Deactivate;
-        Player.IsHit -= GameOver;
+        //Player.OnPlayerMoved -= Deactivate;
+        //Player.IsHit -= GameOver;
     }
 
     private void Deactivate(Vector3 playerPosition)

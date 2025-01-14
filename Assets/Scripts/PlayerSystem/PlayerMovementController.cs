@@ -1,3 +1,6 @@
+using System.Threading.Tasks;
+using DG.Tweening;
+using Extensions;
 using InputSystem;
 using UnityEngine;
 
@@ -5,23 +8,22 @@ namespace PlayerSystem
 {
     public class PlayerMovementController : MonoBehaviour
     {
-        public void Move(SwipeDirection swipe)
+        private const int STEP = 3;
+        private bool _isMoving;
+
+        public async Task Move(SwipeDirection swipe)
         {
-            switch (swipe)
-            {
-                case SwipeDirection.Up:
-                    Debug.Log("Move Up");
-                    break;
-                case SwipeDirection.Right:
-                    Debug.Log("Move Right");
-                    break;
-                case SwipeDirection.Down:
-                    Debug.Log("Move Down");
-                    break;
-                case SwipeDirection.Left:
-                    Debug.Log("Move Left");
-                    break;
-            }
+            if (_isMoving) return;
+            _isMoving = true;
+
+            var movementVector = InputExtensions.GetSwipeDirection(swipe);
+            await MoveTween(movementVector * STEP);
+            _isMoving = false;
+        }
+
+        private Task MoveTween(Vector3 targetPosition)
+        {
+            return transform.DOMove(targetPosition, 0.5f).SetRelative().AsyncWaitForCompletion();
         }
     }
 }
