@@ -1,16 +1,28 @@
+using InputSystem;
 using UnityEngine;
 
-public class PlayerMovementController : MonoBehaviour
+namespace PlayerSystem
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class PlayerMovementController : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void Move(SwipeDirection swipe)
+        {
+            switch (swipe)
+            {
+                case SwipeDirection.Up:
+                    Debug.Log("Move Up");
+                    break;
+                case SwipeDirection.Right:
+                    Debug.Log("Move Right");
+                    break;
+                case SwipeDirection.Down:
+                    Debug.Log("Move Down");
+                    break;
+                case SwipeDirection.Left:
+                    Debug.Log("Move Left");
+                    break;
+            }
+        }
     }
 }
+
