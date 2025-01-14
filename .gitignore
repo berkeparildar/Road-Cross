@@ -240,3 +240,4 @@ sysinfo.txt
 upload_certificate.pem
 /.idea
 /.vscode
+.vsconfig
