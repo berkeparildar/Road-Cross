@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace PlayerSystem
@@ -11,6 +12,21 @@ namespace PlayerSystem
         [SerializeField] private AudioClip _logSound;
         [SerializeField] private AudioClip _splashSound;
         [SerializeField] private AudioClip _crashSound;
+
+        private void Awake()
+        {
+            PlayerMovementController.PlayerMoved += OnPlayerMoved;
+        }
+
+        private void OnDestroy()
+        {
+            PlayerMovementController.PlayerMoved -= OnPlayerMoved;
+        }
+
+        private void OnPlayerMoved()
+        {
+            PlaySurfaceSound();
+        }
 
         private void PlaySurfaceSound(int index)
         {
@@ -32,7 +48,35 @@ namespace PlayerSystem
                     _audioSource.clip = _crashSound;
                     break;
             }
+
             _audioSource.Play();
+        }
+
+        private void PlaySurfaceSound()
+        {
+            if (!Physics.Raycast(transform.position, Vector3.down, out var hit, 1f)) return;
+            switch (hit.transform.tag)
+            {
+                case "Grass":
+                    PlaySurfaceSound(0);
+                    break;
+                case "Log":
+                    PlaySurfaceSound(1);
+                    transform.SetParent(hit.transform);
+                    hit.transform.GetComponent<Log>().Sink();
+                    break;
+                case "Road":
+                    PlaySurfaceSound(2);
+                    break;
+                case "Water":
+                    PlaySurfaceSound(3);
+                    break;
+            }
+        }
+
+        public void PlayCarContactSound()
+        {
+
         }
     }
 }

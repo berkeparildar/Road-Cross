@@ -8,7 +8,7 @@ namespace InputSystem
 {
     public class InputManager : MonoBehaviour
     {
-        public static UnityAction<SwipeDirection> OnSwipe;
+        public static UnityAction<SwipeDirection> PlayerSwiped;
         private InputController _controller;
         private Vector2 _swipeDirection;
 
@@ -29,30 +29,28 @@ namespace InputSystem
 
         private void ProcessTouchComplete(InputAction.CallbackContext context)
         {
-            Debug.Log("Swipe Called");
-            Debug.Log("Magnitude: " + _swipeDirection.magnitude);
             if (_swipeDirection.magnitude < _minSwipeDistance) return;
 
             if (Mathf.Abs(_swipeDirection.x) > Mathf.Abs(_swipeDirection.y))
             {
                 if (_swipeDirection.x > 0)
                 {
-                    OnSwipe?.Invoke(SwipeDirection.Right);
+                    PlayerSwiped?.Invoke(SwipeDirection.Right);
                 }
                 else
                 {
-                    OnSwipe?.Invoke(SwipeDirection.Left);
+                    PlayerSwiped?.Invoke(SwipeDirection.Left);
                 }
             }
             else
             {
                 if (_swipeDirection.y > 0)
                 {
-                    OnSwipe?.Invoke(SwipeDirection.Up);
+                    PlayerSwiped?.Invoke(SwipeDirection.Up);
                 }
                 else
                 {
-                    OnSwipe?.Invoke(SwipeDirection.Down);
+                    PlayerSwiped?.Invoke(SwipeDirection.Down);
                 }
             }
         }

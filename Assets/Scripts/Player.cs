@@ -7,10 +7,7 @@ public class Player : MonoBehaviour
 
    /*
     [SerializeField] private GameObject model;
-    [SerializeField] private bool atTop;
     [SerializeField] private bool jump;
-    [SerializeField] private float jumpSpeed;
-    [SerializeField] private Animator animator;
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     [SerializeField] private BoxCollider boxCollider;
     [SerializeField] private int jumpHeight;
@@ -22,18 +19,7 @@ public class Player : MonoBehaviour
     public static event Action<Vector3> OnPlayerMoved;
     public static event Action IsHit;
     [SerializeField] private bool gotInput;
-    private static readonly int JumpTrigger = Animator.StringToHash("jump");
-    private static readonly int Crash = Animator.StringToHash("crash");
-    private static readonly int Squeeze = Animator.StringToHash("squeeze");
 
-    private void Update()
-    {
-        FallDownToRiver();
-        CheckPlayerBounds();
-        MoveToPosition();
-        JumpModel();
-        StopCameraOutOfBounds();
-    }
 
     private void MoveToPosition()
     {
@@ -120,43 +106,6 @@ public class Player : MonoBehaviour
     private void IsSinking(bool isSinking)
     {
         isMoving = isSinking;
-    }
-
-    private void JumpModel()
-    {
-        var currentPosition = model.transform.position;
-        if (!jump) return;
-        if (!atTop)
-        {
-            model.transform.position = Vector3.MoveTowards(currentPosition, new Vector3(currentPosition.x,
-                jumpHeight, currentPosition.z), jumpSpeed * Time.deltaTime);
-            if (!(currentPosition.y >= jumpHeight)) return;
-            model.transform.position = new Vector3(currentPosition.x, jumpHeight, currentPosition.z);
-            atTop = true;
-        }
-        else
-        {
-            model.transform.position = Vector3.MoveTowards(currentPosition, new Vector3(currentPosition.x,
-                jumpHeight - jumpHeight, currentPosition.z), jumpSpeed * Time.deltaTime);
-            if (!(currentPosition.y <= (jumpHeight - jumpHeight))) return;
-            model.transform.position = new Vector3(currentPosition.x, jumpHeight - jumpHeight, currentPosition.z);
-            jump = false;
-            atTop = false;
-        }
-    }
-
-    private void Jump()
-    {
-        animator.SetTrigger(JumpTrigger);
-        jump = true;
-        if (direction == Vector3.forward)
-        {
-            gameManager.IncreaseScore();
-        }
-        else if (direction == Vector3.back)
-        {
-            gameManager.DecreaseScore();
-        }
     }
 
     private void StopCameraOutOfBounds()

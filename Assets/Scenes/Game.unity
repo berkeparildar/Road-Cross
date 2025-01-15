@@ -604,7 +604,7 @@ GameObject:
   - component: {fileID: 243574293}
   - component: {fileID: 243574292}
   m_Layer: 5
-  m_Name: FadeTitle
+  m_Name: GameTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -796,6 +796,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &278453221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 278453222}
+  - component: {fileID: 278453223}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &278453222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278453221}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1042601540}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &278453223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278453221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce3e1b7eba9f41bdbf3fb21b130fc60d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minSwipeDistance: 3
 --- !u!1 &391766250
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,7 +853,7 @@ GameObject:
   - component: {fileID: 391766253}
   - component: {fileID: 391766252}
   m_Layer: 5
-  m_Name: Image
+  m_Name: CursorEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -884,7 +929,7 @@ GameObject:
   - component: {fileID: 403269521}
   - component: {fileID: 403269523}
   m_Layer: 5
-  m_Name: Image
+  m_Name: CursorImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1313,7 +1358,7 @@ GameObject:
   - component: {fileID: 578359376}
   - component: {fileID: 578359375}
   m_Layer: 5
-  m_Name: FadeOut
+  m_Name: FadeIn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1850,7 +1895,7 @@ GameObject:
   - component: {fileID: 786992916}
   - component: {fileID: 786992915}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: CursorEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2165,6 +2210,38 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1042601539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1042601540}
+  m_Layer: 0
+  m_Name: GameRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1042601540
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042601539}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.667055, y: 2.338731, z: -7.4195137}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 278453222}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1045637049
 GameObject:
   m_ObjectHideFlags: 0
@@ -2537,7 +2614,7 @@ MonoBehaviour:
   defaultRiverPosition: {x: 0, y: -0.8, z: 0}
   defaultRoadPosition: {x: 0, y: 0, z: 0}
   targetSpawnPosition: 0
-  player: {fileID: 1433873479}
+  player: {fileID: 1433873478}
   endUI: {fileID: 2123884849}
   score: 0
   scoreText: {fileID: 1989388873}
@@ -2575,11 +2652,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1433873484}
   - component: {fileID: 1433873481}
-  - component: {fileID: 1433873479}
   - component: {fileID: 1433873485}
   - component: {fileID: 1433873486}
   - component: {fileID: 1433873487}
   - component: {fileID: 1433873488}
+  - component: {fileID: 1433873491}
+  - component: {fileID: 1433873490}
+  - component: {fileID: 1433873489}
+  - component: {fileID: 1433873492}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2587,47 +2667,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1433873479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1433873478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 567d4589e9e4c4087b3b6668547849ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 15
-  step: 3
-  isMoving: 0
-  targetPosition: {x: 0, y: 0.5, z: 3}
-  direction: {x: 0, y: 0, z: 0}
-  hasObstacleInDirection: 0
-  model: {fileID: 416070340}
-  atTop: 0
-  jump: 0
-  jumpSpeed: 10
-  animator: {fileID: 416070342}
-  virtualCamera: {fileID: 941734794}
-  boxCollider: {fileID: 1433873481}
-  rightBound: 24
-  leftBound: -24
-  jumpHeight: 1
-  shouldFall: 0
-  waterSplash: {fileID: 2036437101}
-  gameManager: {fileID: 1429756131}
-  audioSource: {fileID: 1433873486}
-  grassSound: {fileID: 8300000, guid: dca5123b28cc84f3a8aaf2aa53d6f2b8, type: 3}
-  roadSound: {fileID: 8300000, guid: 72643c13cfec344d0a46772a0b8e467a, type: 3}
-  logSound: {fileID: 8300000, guid: 1fe8708bbd90a456183347150aef93d6, type: 3}
-  splashSound: {fileID: 8300000, guid: 422ead040b874bb4da14db4d27cfb9bc, type: 3}
-  crashSound: {fileID: 8300000, guid: d208554f639cb459ebee3882f07de97f, type: 3}
-  riverSound: {fileID: 184888997}
-  gotInput: 0
-  touchDownPosition: {x: 0, y: 0}
-  touchUpPosition: {x: 0, y: 0}
 --- !u!65 &1433873481
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2895,6 +2934,58 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1433873489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433873478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 697ca8047406b4b5b9334ae53706ba6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1433873490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433873478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d72f62d663f545d48b7b1e11f981a79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1433873491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433873478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738c19806a3143869d3a9750547867fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementController: {fileID: 1433873490}
+  _boundsController: {fileID: 1433873489}
+  _modelController: {fileID: 1433873492}
+--- !u!114 &1433873492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433873478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b98d4c7a4bc46c5a7a4fedcc97ae5f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerModel: {fileID: 416070340}
 --- !u!1 &1557873263
 GameObject:
   m_ObjectHideFlags: 0
@@ -3005,7 +3096,7 @@ GameObject:
   - component: {fileID: 1804816321}
   - component: {fileID: 1804816320}
   m_Layer: 5
-  m_Name: FadeIn
+  m_Name: FadeOut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8452,7 +8543,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2121866952}
   m_Layer: 5
-  m_Name: StartUI
+  m_Name: TapUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8556,3 +8647,4 @@ SceneRoots:
   - {fileID: 239695396}
   - {fileID: 267621067}
   - {fileID: 184888999}
+  - {fileID: 1042601540}
