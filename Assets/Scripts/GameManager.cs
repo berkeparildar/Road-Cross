@@ -1,3 +1,5 @@
+using System.Collections;
+using GoogleMobileAds.Api;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -25,9 +27,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI endScore;
     [SerializeField] private GameObject fadeTitle;
     [SerializeField] private GameObject startTitle;
+    public static int adCounter = 1;
+    [SerializeField] private AdsManager adsManager;
 
     private void Start()
     {
+        Application.targetFrameRate = 60;
+        MobileAds.RaiseAdEventsOnUnityMainThread = true;
         topScore = PlayerPrefs.GetInt("TopScore", 0);
         currentPosition = 15;
         levelSelector = 1;
@@ -147,10 +153,37 @@ public class GameManager : MonoBehaviour
         endUI.SetActive(true);
     }
 
-    public void ReloadLevel()
+    public void ReloadCoroutine()
+    {
+        StartCoroutine(ReloadLevel());
+    }
+
+    public IEnumerator ReloadLevel()
     {
         fadeIn.SetActive(true);
-        Invoke(nameof(RestartLevel), 1);
+        yield return new WaitForSeconds(1);
+        if (adCounter >= 2)
+        {
+            adCounter = 1;
+            InterstitialAd ad = adsManager.ShowInterstitialAd();
+            if (ad == null)
+            {
+                RestartLevel();
+            }
+            else
+            {
+                ad.OnAdFullScreenContentClosed += RestartLevel;
+                ad.OnAdFullScreenContentFailed += _ =>
+                {
+                    RestartLevel();
+                };
+            }
+        }
+        else
+        {
+            adCounter++;
+            RestartLevel();
+        }
     }
 
     public void RestartLevel()
