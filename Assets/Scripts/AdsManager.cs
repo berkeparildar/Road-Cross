@@ -35,7 +35,6 @@ public class AdsManager : MonoBehaviour
                 {
                     return;
                 }
-
                 Debug.Log("Ad was loaded");
                 _interstitialAd = ad;
                 RegisterEventHandlers(_interstitialAd);
@@ -44,9 +43,15 @@ public class AdsManager : MonoBehaviour
 
     public InterstitialAd ShowInterstitialAd()
     {
-        if (_interstitialAd == null || !_interstitialAd.CanShowAd()) return null;
-        _interstitialAd.Show();
-        return _interstitialAd;
+        if (_interstitialAd != null && _interstitialAd.CanShowAd())
+        {
+            _interstitialAd.Show();
+            return _interstitialAd;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     private void RegisterEventHandlers(InterstitialAd interstitialAd)
